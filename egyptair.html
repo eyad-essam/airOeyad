@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EgyptAir - مصر للطيران</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        body.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .book-button {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: white !important;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .book-button:hover {
+            background: linear-gradient(135deg, #f4d03f, #d4af37);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Language Switch */
+        .language-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 0.3rem;
+            border-radius: 20px;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            padding: 0.3rem 0.8rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #d4af37;
+        }
+
+        .lang-btn.active {
+            background: #d4af37;
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 2rem auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* About Section */
+        .about {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .about h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .about h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 2px;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Aircraft Section */
+        .aircraft-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .aircraft-section h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .aircraft-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 2px;
+        }
+
+        .aircraft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .aircraft-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .aircraft-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .aircraft-card:hover::before {
+            left: 100%;
+        }
+
+        .aircraft-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .aircraft-card h3 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .aircraft-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .aircraft-card:hover .aircraft-image {
+            transform: scale(1.05);
+        }
+
+        /* Awards Section */
+        .awards {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .awards h2 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .awards h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 2px;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .award-item {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-item::before {
+            content: '🏆';
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #d4af37;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: #b8941f;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .language-switch {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 2rem;
+            }
+
+            .about, .aircraft-section, .awards {
+                padding: 2rem;
+            }
+
+            .about h2, .aircraft-section h2, .awards h2 {
+                font-size: 2rem;
+            }
+
+            .aircraft-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-plane"></i>
+                <span data-en="EgyptAir" data-ar="مصر للطيران">EgyptAir</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="airOeyad.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                <li><a href="#about" data-en="About EgyptAir" data-ar="عن مصر للطيران">About EgyptAir</a></li>
+                <li><a href="#aircraft" data-en="Fleet" data-ar="الأسطول">Fleet</a></li>
+                <li><a href="#awards" data-en="Awards" data-ar="الجوائز">Awards</a></li>
+                <li><a href="https://www.egyptair.com/en/Pages/HomePage.aspx" target="_blank" rel="noopener noreferrer" class="book-button" data-en="Book Now" data-ar="احجز الآن">Book Now</a></li>
+                <li>
+                    <div class="language-switch">
+                        <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                        <button class="lang-btn" onclick="switchLanguage('ar')">AR</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section id="home" class="hero fade-in">
+                <div class="hero-content">
+                    <h1 data-en="EgyptAir" data-ar="مصر للطيران">EgyptAir</h1>
+                    <img src=" egyptair.jfif" alt="EgyptAir" class="hero-image">
+                    <p style="font-size: 1.2rem; margin-top: 1rem;" data-en="The national flag carrier of the Arab Republic of Egypt" data-ar="الناقل الجوي الوطني لجمهورية مصر العربية">The national flag carrier of the Arab Republic of Egypt</p>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="about fade-in">
+                <h2 data-en="About EgyptAir" data-ar="عن مصر للطيران">About EgyptAir</h2>
+                <p data-en="EgyptAir is the national flag carrier of the Arab Republic of Egypt and one of the oldest airlines in the world. Established in 1932 as Misr Airwork, it began its first commercial flights between Cairo and Alexandria in 1933, making it the first airline in the Middle East and Africa. Over the decades, the company went through several transformations, including a period during World War II when it was nationalized, and a later merger in the 1960s with Syrian Airlines under the name United Arab Airlines. In 1971, it officially returned to the name EgyptAir, which has since become a well-recognized brand across the globe." data-ar="مصر للطيران هي الناقل الجوي الوطني لجمهورية مصر العربية وواحدة من أقدم شركات الطيران في العالم. تأسست في عام 1932 باسم مصر إيرورك، وبدأت أولى رحلاتها التجارية بين القاهرة والإسكندرية في عام 1933، مما جعلها أول شركة طيران في الشرق الأوسط وأفريقيا. على مدى العقود، مرت الشركة بعدة تحولات، بما في ذلك فترة خلال الحرب العالمية الثانية عندما تم تأميمها، واندماج لاحق في الستينيات مع الخطوط الجوية السورية تحت اسم الخطوط الجوية العربية المتحدة. في عام 1971، عادت رسمياً إلى اسم مصر للطيران، والذي أصبح منذ ذلك الحين علامة تجارية معترف بها عالمياً.">
+                    EgyptAir is the national flag carrier of the Arab Republic of Egypt and one of the oldest airlines in the world. Established in 1932 as Misr Airwork, it began its first commercial flights between Cairo and Alexandria in 1933, making it the first airline in the Middle East and Africa. Over the decades, the company went through several transformations, including a period during World War II when it was nationalized, and a later merger in the 1960s with Syrian Airlines under the name United Arab Airlines. In 1971, it officially returned to the name EgyptAir, which has since become a well-recognized brand across the globe.
+                </p>
+                
+                <p data-en="Today, EgyptAir connects Egypt with over seventy destinations across Africa, Europe, Asia, and the Americas. The airline is known not only for its role in connecting Egypt to the world but also for symbolizing national pride. In 2008, it joined Star Alliance, allowing passengers to access a much wider network and benefit from international partnerships. EgyptAir has also invested in customer service, digital booking systems, and improved passenger experiences to keep up with global standards. Its hospitality is often described as warm and distinctly Egyptian, reflecting the culture of the country itself. With over ninety years of history, EgyptAir continues to represent resilience, growth, and ambition." data-ar="اليوم، تربط مصر للطيران مصر بأكثر من سبعين وجهة عبر أفريقيا وأوروبا وآسيا والأمريكتين. تُعرف الشركة ليس فقط بدورها في ربط مصر بالعالم ولكن أيضاً كرمز للفخر الوطني. في عام 2008، انضمت إلى تحالف ستار، مما يتيح للمسافرين الوصول إلى شبكة أوسع بكثير والاستفادة من الشراكات الدولية. استثمرت مصر للطيران أيضاً في خدمة العملاء وأنظمة الحجز الرقمية وتحسين تجارب المسافرين لمواكبة المعايير العالمية. غالباً ما توصف ضيافتها بأنها دافئة ومصرية مميزة، مما يعكس ثقافة البلد نفسه. مع أكثر من تسعين عاماً من التاريخ، تواصل مصر للطيران تمثيل المرونة والنمو والطموح.">
+                    Today, EgyptAir connects Egypt with over seventy destinations across Africa, Europe, Asia, and the Americas. The airline is known not only for its role in connecting Egypt to the world but also for symbolizing national pride. In 2008, it joined Star Alliance, allowing passengers to access a much wider network and benefit from international partnerships. EgyptAir has also invested in customer service, digital booking systems, and improved passenger experiences to keep up with global standards. Its hospitality is often described as warm and distinctly Egyptian, reflecting the culture of the country itself. With over ninety years of history, EgyptAir continues to represent resilience, growth, and ambition.
+                </p>
+            </section>
+
+            <!-- Aircraft Section -->
+            <section id="aircraft" class="aircraft-section fade-in">
+                <h2 data-en="Aircraft Fleet" data-ar="أسطول الطائرات">Aircraft Fleet</h2>
+                <div class="aircraft-grid">
+                    <div class="aircraft-card" data-aircraft="A320neo">
+                        <h3>Airbus A320neo</h3>
+                        <img src="a320negypt.jfif" alt="Airbus A320neo" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A321neo">
+                        <h3>Airbus A321neo</h3>
+                        <img src="321n egypt.jfif" alt="Airbus A321neo" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A330-200">
+                        <h3>Airbus A330-200</h3>
+                        <img src="330-200egypt.jfif" alt="Airbus A330-200" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A330-300">
+                        <h3>Airbus A330-300</h3>
+                        <img src="330-300EGYPT.jfif" alt="Airbus A330-300" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="B737-800">
+                        <h3>Boeing 737-800</h3>
+                        <img src="b737-800eg.jfif" alt="Boeing 737-800" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="B787-9">
+                        <h3>Boeing 787-9 Dreamliner</h3>
+                        <img src="787-9_eg.jfif" alt="Boeing 787-9 Dreamliner" class="aircraft-image">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Awards Section -->
+            <section id="awards" class="awards fade-in">
+                <h2 data-en="Awards and Recognitions" data-ar="الجوائز والتقديرات">Awards and Recognitions</h2>
+                <div class="awards-grid">
+                    <div class="award-item">
+                        <span data-en="Best Airline in Africa" data-ar="أفضل شركة طيران في أفريقيا">Best Airline in Africa</span>
+                    </div>
+                    <div class="award-item">
+                        <span data-en="Most Improved Airline in Africa" data-ar="أكثر شركة طيران تحسناً في أفريقيا">Most Improved Airline in Africa</span>
+                    </div>
+                    <div class="award-item">
+                        <span data-en="Best Economy Class Catering in Africa" data-ar="أفضل خدمة طعام للدرجة الاقتصادية في أفريقيا">Best Economy Class Catering in Africa</span>
+                    </div>
+                    <div class="award-item">
+                        <span data-en="Best Airline Staff in Africa" data-ar="أفضل طاقم شركة طيران في أفريقيا">Best Airline Staff in Africa</span>
+                    </div>
+                    <div class="award-item">
+                        <span data-en="Best Cabin Crew in Africa" data-ar="أفضل طاقم مقصورة في أفريقيا">Best Cabin Crew in Africa</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Language switching functionality
+        let currentLanguage = 'en';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            const body = document.body;
+            const html = document.documentElement;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Switch direction and language
+            if (lang === 'ar') {
+                body.classList.add('rtl');
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+            } else {
+                body.classList.remove('rtl');
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+            }
+            
+            // Update all text elements
+            document.querySelectorAll('[data-en][data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    element.textContent = element.getAttribute('data-ar');
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Aircraft card click interaction
+        document.querySelectorAll('.aircraft-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const aircraftName = this.dataset.aircraft;
+                
+                // Create a modal-like effect
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                
+                const modalContent = document.createElement('div');
+                modalContent.style.cssText = `
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 15px;
+                    text-align: center;
+                    max-width: 500px;
+                    transform: scale(0.8);
+                    transition: transform 0.3s ease;
+                `;
+                
+                modalContent.innerHTML = `
+                    <h3 style="color: #1e3c72; margin-bottom: 1rem;">${aircraftName}</h3>
+                    <img src="${this.querySelector('img').src}" style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                    <p style="color: #555;">${currentLanguage === 'ar' ? 'طائرة حديثة من أسطول مصر للطيران' : 'A modern aircraft from the EgyptAir fleet'}</p>
+                    <button onclick="this.closest('.modal').remove()" style="
+                        background: linear-gradient(135deg, #d4af37, #f4d03f);
+                        color: white;
+                        border: none;
+                        padding: 0.5rem 1rem;
+                        border-radius: 5px;
+                        margin-top: 1rem;
+                        cursor: pointer;
+                    ">${currentLanguage === 'ar' ? 'إغلاق' : 'Close'}</button>
+                `;
+                
+                modal.appendChild(modalContent);
+                modal.className = 'modal';
+                document.body.appendChild(modal);
+                
+                // Animate in
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                    modalContent.style.transform = 'scale(1)';
+                }, 10);
+                
+                // Close on background click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+            });
+        });
+
+        // Header background change on scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Add loading animation to images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
+            
+            img.addEventListener('error', function() {
+                this.style.opacity = '0.5';
+                this.alt = 'Image not available';
+            });
+        });
+
+        // Award items animation
+        document.querySelectorAll('.award-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        console.log('EgyptAir - Website loaded successfully!');
+    </script>
+</body>
+</html>
+

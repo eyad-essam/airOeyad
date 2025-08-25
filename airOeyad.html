@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirOEyad - مركز الطيران</title>
+    <meta name="description" content="AirOEyad - Your gateway to the world's best airlines">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        body.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #667eea;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Language Switch */
+        .language-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.3rem;
+            border-radius: 20px;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            padding: 0.3rem 0.8rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #667eea;
+        }
+
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Airlines Section */
+        .airlines-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .airlines-section h2 {
+            color: #667eea;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .airlines-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .airlines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .airline-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .airline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .airline-card:hover::before {
+            left: 100%;
+        }
+
+        .airline-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .airline-logo {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+            background: #f8f9fa;
+            padding: 1rem;
+        }
+
+        .airline-card:hover .airline-logo {
+            transform: scale(1.05);
+        }
+
+        .airline-card h3 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .airline-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .airline-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .airline-button:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* About Section */
+        .about-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-section h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .language-switch {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 3rem 2rem;
+            }
+
+            .airlines-section, .about-section {
+                padding: 2rem;
+            }
+
+            .airlines-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .airlines-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Special styling for different airlines */
+        .airline-card.egyptair {
+            border-top: 4px solid #d4af37;
+        }
+
+        .airline-card.qatar {
+            border-top: 4px solid #5d1049;
+        }
+
+        .airline-card.emirates {
+            border-top: 4px solid #c41e3a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-plane-departure"></i>
+                <span data-en="AirOEyad" data-ar="إير أياد">AirOEyad</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href=" \airOeyad.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                <li><a href="#airlines" data-en="Airlines" data-ar="شركات الطيران">Airlines</a></li>
+                <li><a href="#about" data-en="About Us" data-ar="عنا">About Us</a></li>
+                <li><a href="//wa.me/+201024334587" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</a></li>
+                <li>
+                    <div class="language-switch">
+                        <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                        <button class="lang-btn" onclick="switchLanguage('ar')">AR</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section id="home" class="hero fade-in">
+                <div class="hero-content">
+                    <h1 data-en="AirOEyad" data-ar="إير أياد">AirOEyad</h1>
+                    <p data-en="Your Gateway to the World's Best Airlines" data-ar="بوابتك إلى أفضل شركات الطيران في العالم">Your Gateway to the World's Best Airlines</p>
+                    <p data-en="Discover premium airline experiences and book your next journey with confidence" data-ar="اكتشف تجارب الطيران المميزة واحجز رحلتك القادمة بثقة">Discover premium airline experiences and book your next journey with confidence</p>
+                </div>
+            </section>
+
+            <!-- Airlines Section -->
+            <section id="airlines" class="airlines-section fade-in">
+                <h2 data-en="Featured Airlines" data-ar="شركات الطيران المميزة">Featured Airlines</h2>
+                <div class="airlines-grid">
+                    <!-- EgyptAir Card -->
+                    <div class="airline-card egyptair" onclick="navigateToAirline('egyptair')">
+                        <img src="egyptair.jfif" alt="EgyptAir Logo" class="airline-logo">
+                        <h3 data-en="EgyptAir" data-ar="مصر للطيران">EgyptAir</h3>
+                        <p data-en="The national flag carrier of Egypt, connecting you to destinations across Africa, Asia, Europe, and the Americas." data-ar="الناقل الوطني لمصر، يربطك بوجهات عبر أفريقيا وآسيا وأوروبا والأمريكتين.">The national flag carrier of Egypt, connecting you to destinations across Africa, Asia, Europe, and the Americas.</p>
+                        <button class="airline-button" data-en="Explore EgyptAir" data-ar="استكشف مصر للطيران">Explore EgyptAir</button>
+                    </div>
+
+                    <!-- Qatar Airways Card -->
+                    <div class="airline-card qatar" onclick="navigateToAirline('qatar')">                        <img src="qatar.jfif" alt="Qatar Airways Logo" class="airline-logo">                        <h3 data-en="Qatar Airways" data-ar="الخطوط الجوية القطرية">Qatar Airways</h3>
+                        <p data-en="The World's Best Airline, offering exceptional service and luxury travel experiences to over 150 destinations worldwide." data-ar="أفضل شركة طيران في العالم، تقدم خدمة استثنائية وتجارب سفر فاخرة إلى أكثر من 150 وجهة عالمياً.">The World's Best Airline, offering exceptional service and luxury travel experiences to over 150 destinations worldwide.</p>
+                        <button class="airline-button" data-en="Explore Qatar Airways" data-ar="استكشف الخطوط الجوية القطرية">Explore Qatar Airways</button>
+                    </div>
+
+                    <!-- Emirates Card -->
+                    </div>
+                    <div class="airline-card emirates" onclick="navigateToAirline('emirates')">                        <img src="emir.png" alt="emirates Airways Logo" class="airline-logo">                        <h3 data-en="emirates " data-ar="طيان الامارات">emirates</h3>
+                        <p data-en="Fly Better with Emirates. Experience world-class service, modern fleet, and award-winning inflight entertainment." data-ar="طر بشكل أفضل مع طيران الإمارات. اختبر الخدمة عالمية المستوى والأسطول الحديث والترفيه الجوي الحائز على الجوائز.">The World's Best Airline, offering exceptional service and luxury travel experiences to over 150 destinations worldwide.</p>
+                        <button class="airline-button" data-en="Explore Emirates" data-ar="استكشف طيران الإماران">Explore Emirates</button>
+                    </div>
+
+                    
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="about-section fade-in">
+                <h2 data-en="About AirOEyad" data-ar="عن إير أياد">About AirOEyad</h2>
+                <p data-en="AirOEyad is your trusted partner in air travel, connecting you with the world's leading airlines. We provide comprehensive information about premium carriers, helping you make informed decisions for your journey. Whether you're traveling for business or leisure, we ensure you have access to the best airline experiences available." data-ar="إير أياد هو شريكك الموثوق في السفر الجوي، يربطك بأفضل شركات الطيران في العالم. نقدم معلومات شاملة عن الناقلات المميزة، مما يساعدك على اتخاذ قرارات مدروسة لرحلتك. سواء كنت تسافر للعمل أو الترفيه، نضمن لك الوصول إلى أفضل تجارب الطيران المتاحة.">AirOEyad is your trusted partner in air travel, connecting you with the world's leading airlines. We provide comprehensive information about premium carriers, helping you make informed decisions for your journey. Whether you're traveling for business or leisure, we ensure you have access to the best airline experiences available.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Language switching functionality
+        let currentLanguage = 'en';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            const body = document.body;
+            const html = document.documentElement;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // Switch direction and language
+            if (lang === 'ar') {
+                body.classList.add('rtl');
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+            } else {
+                body.classList.remove('rtl');
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+            }
+            
+            // Update all text elements
+            document.querySelectorAll('[data-en][data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    element.textContent = element.getAttribute('data-ar');
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+        }
+
+        // Navigation to airline pages
+        function navigateToAirline(airline) {
+            const airlinePages = {
+                'egyptair': 'egyptair.html',
+                'qatar': 'qatar.html',
+                'emirates': 'emirates.html',
+
+            };
+            
+            if (airlinePages[airline]) {
+                window.location.href = airlinePages[airline];
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Add hover effects to airline cards
+        document.querySelectorAll('.airline-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        console.log('AirOEyad - Website loaded successfully!');
+    </script>
+</body>
+</html>
+

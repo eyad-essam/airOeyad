@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+     <head> <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Qatar Airways - الخطوط الجوية القطرية</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+          <style> * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Cairo', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #5d1049 0%, #8b1538 50%, #5d1049 100% );
+
+        transition: all 0.3s ease;
+    }
+
+    body.rtl {
+        direction: rtl;
+        text-align: right;
+    }
+
+    /* Header Styles */
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #5d1049;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+    }
+
+    .nav-links a:hover {
+        color: #5d1049;
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #5d1049;
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .book-button {
+        background: linear-gradient(135deg, #5d1049, #8b1538);
+        color: white !important;
+        padding: 0.7rem 1.5rem;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .book-button:hover {
+        background: linear-gradient(135deg, #8b1538, #5d1049);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(93, 16, 73, 0.3);
+    }
+
+    /* Language Switch */
+    .language-switch {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(93, 16, 73, 0.1);
+        padding: 0.3rem;
+        border-radius: 20px;
+        margin-left: 1rem;
+    }
+
+    .lang-btn {
+        padding: 0.3rem 0.8rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 15px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        color: #5d1049;
+    }
+
+    .lang-btn.active {
+        background: #5d1049;
+        color: white;
+    }
+
+    /* Main Content */
+    main {
+        margin-top: 80px;
+        padding: 2rem 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-image {
+        width: 200px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 15px;
+        margin: 2rem auto;
+        display: block;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .hero-image:hover {
+        transform: scale(1.05);
+    }
+
+    /* About Section */
+    .about {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .about h2 {
+        color: #5d1049;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .about h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #5d1049, #8b1538);
+        border-radius: 2px;
+    }
+
+    .about p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: justify;
+        color: #555;
+    }
+
+    /* Aircraft Section */
+    .aircraft-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .aircraft-section h2 {
+        color: #5d1049;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .aircraft-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #5d1049, #8b1538);
+        border-radius: 2px;
+    }
+
+    .aircraft-category {
+        margin-bottom: 3rem;
+    }
+
+    .category-title {
+        color: #5d1049;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .aircraft-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .aircraft-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .aircraft-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(93, 16, 73, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .aircraft-card:hover::before {
+        left: 100%;
+    }
+
+    .aircraft-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .aircraft-card h3 {
+        color: #5d1049;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .aircraft-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .aircraft-card:hover .aircraft-image {
+        transform: scale(1.05);
+    }
+
+    .favorite-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* More Button */
+    .more-button {
+        background: linear-gradient(135deg, #5d1049, #8b1538);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        margin: 2rem auto;
+        box-shadow: 0 5px 20px rgba(93, 16, 73, 0.3);
+    }
+
+    .more-button:hover {
+        background: linear-gradient(135deg, #8b1538, #5d1049);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(93, 16, 73, 0.4);
+    }
+
+    .hidden-aircraft {
+        display: none;
+    }
+
+    .hidden-aircraft.show {
+        display: block;
+        animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Awards Section */
+    .awards {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .awards h2 {
+        color: #5d1049;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .awards h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #5d1049, #8b1538);
+        border-radius: 2px;
+    }
+
+    .awards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .award-item {
+        background: linear-gradient(135deg, #5d1049, #8b1538);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: 600;
+        box-shadow: 0 5px 20px rgba(93, 16, 73, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .award-item::before {
+        content: '🏆';
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .award-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(93, 16, 73, 0.4);
+    }
+
+    .award-count {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+
+    /* Scroll to Top Button */
+    .scroll-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: linear-gradient(135deg, #5d1049, #8b1538);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: 0 5px 20px rgba(93, 16, 73, 0.3);
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .scroll-top:hover {
+        background: linear-gradient(135deg, #8b1538, #5d1049);
+        transform: translateY(-3px);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .language-switch {
+            margin-left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero {
+            padding: 2rem;
+        }
+
+        .about, .aircraft-section, .awards {
+            padding: 2rem;
+        }
+
+        .about h2, .aircraft-section h2, .awards h2 {
+            font-size: 2rem;
+        }
+
+        .aircraft-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Fade in animation */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+</head>
+ <body>
+     <header> 
+        <nav>
+             <a href="#" class="logo">
+                 <i class="fas fa-plane"></i>
+                  <span data-en="Qatar Airways" data-ar="الخطوط الجوية القطرية">Qatar Airways</span>
+                 </a> <ul class="nav-links">
+                     <li><a href="airOeyad.html" data-en="Home" data-ar="الرئيسية">Home</a>
+                    </li> 
+                    <li>
+                        <a href="#about" data-en="About Us" data-ar="عنا">About Us</a>
+                </li>
+                 <li><a href="#aircraft" data-en="Fleet" data-ar="الأسطول">Fleet</a></li>
+                  <li>
+                    <a href="#awards" data-en="Awards" data-ar="الجوائز">Awards</a></li> 
+                    <li><a href="https://www.qatarairways.com/en/book.html" target="_blank" rel="noopener noreferrer" class="book-button" data-en="Book Now" data-ar="احجز الآن">Book Now</a></li> <li> <div class="language-switch">
+                         <button class="lang-btn active" onclick="switchLanguage('en' )">EN</button> <button class="lang-btn" onclick="switchLanguage('ar')">AR</button>
+                         </div>
+                         </li> </ul>
+                         </nav>
+                         </header>
+<main>
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="home" class="hero fade-in">
+            <div class="hero-content">
+                <h1 data-en="Qatar Airways" data-ar="الخطوط الجوية القطرية">Qatar Airways</h1>
+                <img src="qatar.jfif" alt="Qatar Airways" class="hero-image">
+                <p style="font-size: 1.2rem; margin-top: 1rem;" data-en="The World's Best Airline" data-ar="أفضل شركة طيران في العالم">The World's Best Airline</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about fade-in">
+            <h2 data-en="About Us" data-ar="عنا">About Us</h2>
+            <p data-en="Qatar Airways is the state-owned flag carrier of Qatar. The airline operates a hub-and-spoke network, linking over 150 international destinations across Africa, Asia, Europe, The Americas, and Oceania from its base at Hamad International Airport in Doha. Qatar Airways Group employs over 43,000 people. The airline has been a member of the Oneworld alliance since October 2013, the first Persian Gulf carrier to sign with one of the three airline alliances." data-ar="الخطوط الجوية القطرية هي الناقل الوطني لدولة قطر. تدير الشركة شبكة واسعة تربط أكثر من 150 وجهة دولية عبر أفريقيا وآسيا وأوروبا والأمريكتين وأوقيانوسيا من قاعدتها في مطار حمد الدولي بالدوحة. توظف مجموعة الخطوط الجوية القطرية أكثر من 43,000 شخص. انضمت الشركة إلى تحالف Oneworld في أكتوبر 2013، لتكون أول ناقل جوي خليجي ينضم إلى أحد تحالفات الطيران الثلاثة.">
+                Qatar Airways is the state-owned flag carrier of Qatar. The airline operates a hub-and-spoke network, linking over 150 international destinations across Africa, Asia, Europe, The Americas, and Oceania from its base at Hamad International Airport in Doha. Qatar Airways Group employs over 43,000 people. The airline has been a member of the Oneworld alliance since October 2013, the first Persian Gulf carrier to sign with one of the three airline alliances.
+            </p>
+            <p data-en="Known for its exceptional service and luxurious travel experience, Qatar Airways has consistently been ranked among the top airlines globally. It has received numerous awards for its cabin product, in-flight entertainment, and overall passenger satisfaction. The airline's commitment to innovation and customer comfort is reflected in its modern fleet and state-of-the-art facilities. Qatar Airways continues to expand its network and enhance its services, solidifying its position as a leader in the aviation industry." data-ar="تشتهر الخطوط الجوية القطرية بخدمتها الاستثنائية وتجربة السفر الفاخرة، وقد صنفت باستمرار ضمن أفضل شركات الطيران عالمياً. حصلت على العديد من الجوائز لمنتجاتها على متن الطائرة، والترفيه الجوي، ورضا الركاب بشكل عام. ينعكس التزام الشركة بالابتكار وراحة العملاء في أسطولها الحديث ومرافقها المتطورة. تواصل الخطوط الجوية القطرية توسيع شبكتها وتعزيز خدماتها، مما يعزز مكانتها كشركة رائدة في صناعة الطيران.">
+                Known for its exceptional service and luxurious travel experience, Qatar Airways has consistently been ranked among the top airlines globally. It has received numerous awards for its cabin product, in-flight entertainment, and overall passenger satisfaction. The airline's commitment to innovation and customer comfort is reflected in its modern fleet and state-of-the-art facilities. Qatar Airways continues to expand its network and enhance its services, solidifying its position as a leader in the aviation industry.
+            </p>
+        </section>
+
+        <!-- Aircraft Section -->
+        <section id="aircraft" class="aircraft-section fade-in">
+            <h2 data-en="Aircraft Fleet" data-ar="أسطول الطائرات">Aircraft Fleet</h2>
+            <div class="aircraft-category">
+                <h3 class="category-title" data-en="Passenger Aircraft" data-ar="طائرات الركاب">Passenger Aircraft</h3>
+                <div class="aircraft-grid">
+                    <div class="aircraft-card" data-aircraft="A320-200">
+                        <h3>Airbus A320-200</h3>
+                        <img src=" 320-200q.jfif" alt="Airbus A320-200" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A330-200">
+                        <h3>Airbus A330-200</h3>
+                        <img src=" 330-200qa.jfif" alt="Airbus A330-200" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A330-300">
+                        <h3>Airbus A330-300</h3>
+                        <img src=" 330-300qa.jfif" alt="Airbus A330-300" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A350-900">
+                        <h3>Airbus A350-900</h3>
+                        <img src=" 350-900qatar.jfif" alt="Airbus A350-900" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A350-1000">
+                        <h3>Airbus A350-1000</h3>
+                        <img src=" 350-1000 qatar.jfif" alt="Airbus A350-1000" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="A380-800">
+                        <h3>Airbus A380-800</h3>
+                        <img src=" myfav 380 qatar.jfif" alt="Airbus A380-800" class="aircraft-image">
+                        <span class="favorite-badge" data-en="Creator's Favorite" data-ar="المفضلة لدى المطور">Creator's Favorite</span>
+                    </div>
+                    <div class="aircraft-card" data-aircraft="B737-8 MAX">
+                        <h3>Boeing 737-8 MAX</h3>
+                        <img src=" bo737-8max qatar.jfif" alt="Boeing 737-8 MAX" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="B787-8">
+                        <h3>Boeing 787-8</h3>
+                        <img src=" bb737-800 qatar.jfif" alt="Boeing 787-8" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="B787-9">
+                        <h3>Boeing 787-9</h3>
+                        <img src=" bo787-9qatarjj.jfif" alt="Boeing 787-9" class="aircraft-image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="aircraft-category hidden-aircraft">
+                <h3 class="category-title" data-en="Cargo Aircraft" data-ar="طائرات الشحن">Cargo Aircraft</h3>
+                <div class="aircraft-grid">
+                    <div class="aircraft-card" data-aircraft="B777F">
+                        <h3>Boeing 777F</h3>
+                        <img src=" b777fqwa.jfif" alt="Boeing 777F" class="aircraft-image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="aircraft-category hidden-aircraft">
+                <h3 class="category-title" data-en="Executive Aircraft" data-ar="طائرات رجال الأعمال">Executive Aircraft</h3>
+                <div class="aircraft-grid">
+                    <div class="aircraft-card" data-aircraft="Global 5000">
+                        <h3>Global 5000</h3>
+                        <img src=" Bombardier Global 5000.jfif" alt="Global 5000" class="aircraft-image">
+                    </div>
+                    <div class="aircraft-card" data-aircraft="Global XRS">
+                        <h3>Global XRS</h3>
+                        <img src=" g700 qatar.jfif" alt="Global XRS" class="aircraft-image">
+                    </div>
+                </div>
+            </div>
+
+            <button class="more-button" id="moreAircraftBtn" data-en="Show More Aircraft" data-ar="عرض المزيد من الطائرات">Show More Aircraft</button>
+        </section>
+
+        <!-- Awards Section -->
+        <section id="awards" class="awards fade-in">
+            <h2 data-en="Awards and Recognitions" data-ar="الجوائز والتقديرات">Awards and Recognitions</h2>
+            <div class="awards-grid">
+                <div class="award-item">
+                    <span data-en="World's Best Airline" data-ar="أفضل شركة طيران في العالم">World's Best Airline</span>
+                    <div class="award-count" data-en="(7 times winner)" data-ar="(فائزة 7 مرات)">(7 times winner)</div>
+                </div>
+                <div class="award-item">
+                    <span data-en="World's Best Business Class" data-ar="أفضل درجة رجال أعمال في العالم">World's Best Business Class</span>
+                </div>
+                <div class="award-item">
+                    <span data-en="World's Best Business Class Lounge Dining" data-ar="أفضل مطعم في صالة درجة رجال الأعمال في العالم">World's Best Business Class Lounge Dining</span>
+                </div>
+                <div class="award-item">
+                    <span data-en="Best Airline in the Middle East" data-ar="أفضل شركة طيران في الشرق الأوسط">Best Airline in the Middle East</span>
+                </div>
+                <div class="award-item">
+                    <span data-en="World's Best Economy Class" data-ar="أفضل درجة سياحية في العالم">World's Best Economy Class</span>
+                </div>
+                <div class="award-item">
+                    <span data-en="World's Best Economy Class Catering" data-ar="أفضل خدمة طعام للدرجة السياحية في العالم">World's Best Economy Class Catering</span>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top" id="scrollTop">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // Language switching functionality
+    let currentLanguage = 'en';
+
+    function switchLanguage(lang) {
+        currentLanguage = lang;
+        const body = document.body;
+        const html = document.documentElement;
+        
+        // Update active button
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.lang-btn[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+        
+        // Switch direction and language
+        if (lang === 'ar') {
+            body.classList.add('rtl');
+            html.setAttribute('lang', 'ar');
+            html.setAttribute('dir', 'rtl');
+        } else {
+            body.classList.remove('rtl');
+            html.setAttribute('lang', 'en');
+            html.setAttribute('dir', 'ltr');
+        }
+        
+        // Update all text elements
+        document.querySelectorAll('[data-en][data-ar]').forEach(element => {
+            if (lang === 'ar') {
+                element.textContent = element.getAttribute('data-ar');
+            } else {
+                element.textContent = element.getAttribute('data-en');
+            }
+        });
+
+        // Update placeholder texts if any
+        document.querySelectorAll('[data-en-placeholder][data-ar-placeholder]').forEach(element => {
+            if (lang === 'ar') {
+                element.placeholder = element.getAttribute('data-ar-placeholder');
+            } else {
+                element.placeholder = element.getAttribute('data-en-placeholder');
+            }
+        });
+
+        // Update modal content if open
+        const modalTitle = document.querySelector('.modal h3');
+        const modalParagraph = document.querySelector('.modal p');
+        const modalCloseButton = document.querySelector('.modal button');
+
+        if (modalTitle && modalParagraph && modalCloseButton) {
+            const aircraftName = modalTitle.textContent;
+            if (lang === 'ar') {
+                modalParagraph.textContent = 'طائرة حديثة من أسطول الخطوط الجوية القطرية';
+                modalCloseButton.textContent = 'إغلاق';
+            } else {
+                modalParagraph.textContent = 'A modern aircraft from the Qatar Airways fleet';
+                modalCloseButton.textContent = 'Close';
+            }
+        }
+
+        // Update more button text
+        const moreAircraftBtn = document.getElementById('moreAircraftBtn');
+        if (moreAircraftBtn) {
+            if (moreAircraftBtn.classList.contains('show-all')) {
+                moreAircraftBtn.textContent = lang === 'ar' ? 'إخفاء الطائرات' : 'Hide Aircraft';
+            } else {
+                moreAircraftBtn.textContent = lang === 'ar' ? 'عرض المزيد من الطائرات' : 'Show More Aircraft';
+            }
+        }
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Scroll to top functionality
+    const scrollTopBtn = document.getElementById('scrollTop');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Fade in animation on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Aircraft card click interaction
+    document.querySelectorAll('.aircraft-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const aircraftName = this.dataset.aircraft;
+            
+            // Create a modal-like effect
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 15px;
+                text-align: center;
+                max-width: 500px;
+                transform: scale(0.8);
+                transition: transform 0.3s ease;
+            `;
+            
+            modalContent.innerHTML = `
+                <h3 style="color: #5d1049; margin-bottom: 1rem;">${aircraftName}</h3>
+                <img src="${this.querySelector('img').src}" style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                <p style="color: #555;">${currentLanguage === 'ar' ? 'طائرة حديثة من أسطول الخطوط الجوية القطرية' : 'A modern aircraft from the Qatar Airways fleet'}</p>
+                <button onclick="this.closest('.modal').remove()" style="
+                    background: linear-gradient(135deg, #5d1049, #8b1538);
+                    color: white;
+                    border: none;
+                    padding: 0.5rem 1rem;
+                    border-radius: 5px;
+                    margin-top: 1rem;
+                    cursor: pointer;
+                ">${currentLanguage === 'ar' ? 'إغلاق' : 'Close'}</button>
+            `;
+            
+            modal.appendChild(modalContent);
+            modal.className = 'modal';
+            document.body.appendChild(modal);
+            
+            // Animate in
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modalContent.style.transform = 'scale(1)';
+            }, 10);
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        });
+    });
+
+    // Header background change on scroll
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+    });
+
+    // Add loading animation to images
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+        });
+        
+        img.addEventListener('error', function() {
+            this.style.opacity = '0.5';
+            this.alt = 'Image not available';
+        });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+
+    // More Aircraft Button functionality
+    const moreAircraftBtn = document.getElementById('moreAircraftBtn');
+    const hiddenAircraftCategories = document.querySelectorAll('.aircraft-category.hidden-aircraft');
+
+    if (moreAircraftBtn) {
+        moreAircraftBtn.addEventListener('click', () => {
+            hiddenAircraftCategories.forEach(category => {
+                category.classList.toggle('show');
+            });
+
+            if (moreAircraftBtn.classList.contains('show-all')) {
+                moreAircraftBtn.classList.remove('show-all');
+                moreAircraftBtn.textContent = currentLanguage === 'ar' ? 'عرض المزيد من الطائرات' : 'Show More Aircraft';
+            } else {
+                moreAircraftBtn.classList.add('show-all');
+                moreAircraftBtn.textContent = currentLanguage === 'ar' ? 'إخفاء الطائرات' : 'Hide Aircraft';
+            }
+        });
+    }
+
+    // Award items animation
+    document.querySelectorAll('.award-item').forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    console.log('Qatar Airways - Website loaded successfully!');
+</script>
+</body> </html>
